@@ -82,18 +82,18 @@ ypos = []
 zpos = []
 
 for i in range(num):
- sp.call('awk \'FNR == '+str(4+num+i)+'{print $1}\' inputfile.in > c.dat', shell = True)
- vv = np.loadtxt('c.dat')
- nelec.append(vv)
- sp.call('awk \'FNR == '+str(4+i)+'{print $1}\' inputfile.in > c.dat', shell = True)
- vv = np.loadtxt('c.dat')
- xpos.append(vv)
- sp.call('awk \'FNR == '+str(4+i)+'{print $2}\' inputfile.in > c.dat', shell = True)
- vv = np.loadtxt('c.dat')
- ypos.append(vv)
- sp.call('awk \'FNR == '+str(4+i)+'{print $3}\' inputfile.in > c.dat', shell = True)
- vv = np.loadtxt('c.dat')
- zpos.append(vv)
+	sp.call('awk \'FNR == '+str(4+num+i)+'{print $1}\' inputfile.in > c.dat', shell = True)
+	vv = np.loadtxt('c.dat')
+	nelec.append(vv)
+	sp.call('awk \'FNR == '+str(4+i)+'{print $1}\' inputfile.in > c.dat', shell = True)
+	vv = np.loadtxt('c.dat')
+	xpos.append(vv)
+	sp.call('awk \'FNR == '+str(4+i)+'{print $2}\' inputfile.in > c.dat', shell = True)
+	vv = np.loadtxt('c.dat')
+	ypos.append(vv)
+	sp.call('awk \'FNR == '+str(4+i)+'{print $3}\' inputfile.in > c.dat', shell = True)
+	vv = np.loadtxt('c.dat')
+	zpos.append(vv)
 
 file = open("alden.sh", "w")
 file.write("#!/bin/sh")
@@ -136,21 +136,21 @@ for i in range(num):
     sp.call('more '+x+'.den > c.dat', shell = True)
     globals()["den"+str(i+1)] = np.loadtxt('c.dat')
 for i in range(num):    
- for j in range(len(r)):
-  for k in range(num):   
-   XA = np.random.rand(1,3)
-   XB = np.random.rand(it,3)
-   for p in range(it):
-     XB[p] = [globals()["den"+str(i+1)][((j*it)+p),0]/0.529177, globals()["den"+str(i+1)][((j*it)+p),1]/0.529177, globals()["den"+str(i+1)][((j*it)+p),2]/0.529177]
-   XA[0] = [xpos[k], ypos[k], zpos[k]]
-   m = spatial.distance.cdist(XA,XB,"euclidean")
-   globals()["ra"+str(i)+"-"+str(j)+"-"+str(k)] = m
+	for j in range(len(r)):
+		for k in range(num): 
+			XA = np.random.rand(1,3)
+			XB = np.random.rand(it,3)
+			for p in range(it):
+				XB[p] = [globals()["den"+str(i+1)][((j*it)+p),0]/0.529177, globals()["den"+str(i+1)][((j*it)+p),1]/0.529177, globals()["den"+str(i+1)][((j*it)+p),2]/0.529177]
+			XA[0] = [xpos[k], ypos[k], zpos[k]]
+			m = spatial.distance.cdist(XA,XB,"euclidean")
+			globals()["ra"+str(i)+"-"+str(j)+"-"+str(k)] = m
 
 norm = 25.17
 def densum(params, i, j):
     number_of_terms = int(len(params) / 4)
     return sum([(params[k*4 + 0]*((params[k*4 + 1]**3)/norm)*((np.exp(-params[k*4 + 1]*globals()["ra"+str(i)+"-"+str(j)+"-"+str(k)]))))+(params[k*4 + 2]*((params[k*4 + 3]**3)/norm)*((np.exp(-params[k*4 + 3]*globals()["ra"+str(i)+"-"+str(j)+"-"+str(k)]))))
-        for k in range(number_of_terms)])
+		for k in range(number_of_terms)])
 
 def singsumc(params, i, j):
     return (params[i*4 + 0]*((params[i*4 + 1]**3)/norm)*((np.exp(-params[i*4 + 1]*r[j]))))
@@ -159,29 +159,29 @@ def singsumv(params, i, j):
     return (params[i*4 + 2]*((params[i*4 + 3]**3)/norm)*((np.exp(-params[i*4 + 3]*r[j]))))
 params = []
 for i in range(len(nelec)):
- if nelec[i] == 1:
-   params.append(1)
-   params.append(1)
-   params.append(0.001)
-   params.append(1000)
- else:
-   params.append(((2)))
-   params.append(10)
-   params.append(((nelec[i]-1)))
-   params.append(3)
+	if nelec[i] == 1:
+		params.append(1)
+		params.append(1)
+		params.append(0.001)
+		params.append(1000)
+	else:
+		params.append(((2)))
+		params.append(10)
+		params.append(((nelec[i]-1)))
+		params.append(3)
     
 paramsn = []
 for i in range(len(nelec)):
- if nelec[i] == 1:
-   paramsn.append(1)
-   paramsn.append(1)
-   paramsn.append(0.001)
-   paramsn.append(1000)
- else:
-   paramsn.append(((2)))
-   paramsn.append(10)
-   paramsn.append(((nelec[i]-2)))
-   paramsn.append(3)
+	if nelec[i] == 1:
+		paramsn.append(1)
+		paramsn.append(1)
+		paramsn.append(0.001)
+		paramsn.append(1000)
+	else:
+		paramsn.append(((2)))
+		paramsn.append(10)
+		paramsn.append(((nelec[i]-2)))
+		paramsn.append(3)
 
 jb = []
 

@@ -1,16 +1,11 @@
-%mem=5GB
-%NProcShared=26
+%NProcShared=2
 %Chk=checkpoint.chk
-# hf/6-31g geom=connectivity density=cc formcheck int=acc2e=12
+#n CCSD/6-31G SP formcheck Density=CC
 
-Title Card Required
+Title
 
 0 1
- O                 -2.40740748    1.14197529    0.00000000
- H                 -1.44740748    1.14197529    0.00000000
- H                 -2.72786207    2.04691112    0.00000000
-
- 1 2 1.0 3 1.0
- 2
- 3
+O                 -2.40740748    1.14197529    0.00000000
+H                 -1.44740748    1.14197529    0.00000000
+H                 -2.72786207    2.04691112    0.00000000
 
